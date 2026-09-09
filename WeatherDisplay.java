@@ -92,11 +92,11 @@ class WeatherStation extends JFrame
     setSize(800, 250);
     cityName = n;
 
-    setTitle(String.format("Weather State @ %s", cityName));
+    setTitle(String.format("Weather Station @ %s", cityName));
     setLayout(new GridLayout(1, 3));
 
     add(new JLabel("Enter in Kelvin: "));
-    JTextField text = new JTextField("kevlin", 20);
+    JTextField text = new JTextField("kelvin", 20);
     add(text);
     JButton b = new JButton("Submit");
     add(b);
