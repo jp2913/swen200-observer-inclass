@@ -29,10 +29,13 @@ public class WeatherDisplay {
 interface Subject {
   // A: Complete the Subject interface. Hint: It's straightforward.
   // Just look at the method(s) overridden by the implementer
+  public void addObserver(Observer o);
+  public void removeObserver(Observer o);
+  public void notifyObservers();
 }
 
 interface Observer {
-  // B: Complete the Observer interface. 
+  public void update(Subject s, Temperature a);
 }
 
 class Display extends JFrame implements Observer {
@@ -73,6 +76,7 @@ class WeatherStation extends JFrame implements Subject {
   private String cityName;
   
   // D: Declare and initialize "obs" which is the "collection" of Observers
+  private List<Observer> obs = new ArrayList<>();
   
   private Temperature t = new Temperature();
 
@@ -103,11 +107,11 @@ class WeatherStation extends JFrame implements Subject {
 
   @Override
   public void addObserver(Observer o) {
-    // E: Complete this method
+    obs.addObserver(o);
   }
 
   @Override
   public void notifyObservers() {
-    // F: Complete this method
+    obs.removeObserver(o);
   }
 }
