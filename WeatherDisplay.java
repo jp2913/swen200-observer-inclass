@@ -21,32 +21,21 @@ public class WeatherDisplay {
     display2.setLocation(200, 200);
     Display display3 = new Display("Celsius");
     display3.setLocation(400, 200);
-    shippensburgStation.addObserver(display1);
-    shippensburgStation.addObserver(display2);
-    shippensburgStation.addObserver(display3);
 
-    harrisburgStation.addObserver(display1);
-    harrisburgStation.addObserver(display2);
-    harrisburgStation.addObserver(display3);
+    // C: "Attach" the three kinds of displays to each station
   }
 }
 
-interface Subject<S extends Subject<S,O,A>,
-                  O extends Observer<S,O,A> ,
-                  A>{
-  void addObserver(O o);
-
-  void notifyObservers();
+interface Subject {
+  // A: Complete the Subject interface. Hint: It's straightforward.
+  // Just look at the method(s) overridden by the implementer
 }
 
-interface Observer<S extends Subject<S,O,A>,
-                   O extends Observer<S,O,A>,
-                   A> {
-  void update(S s, A a);
+interface Observer {
+  // B: Complete the Observer interface. 
 }
 
-class Display extends JFrame
-    implements Observer<WeatherStation, Display, Temperature>{
+class Display extends JFrame implements Observer {
 
   TextArea text = new TextArea();
   String unit;
@@ -60,9 +49,9 @@ class Display extends JFrame
   }
 
   @Override
-  public void update(WeatherStation s, Temperature a) {
+  public void update(Subject s, Temperature a) {
     Consumer<Double> f = d -> text
-        .append(String.format("%s: %.2f\n", s.getCityName(), d));
+        .append(String.format("%s: %.2f\n", s.toString(), d));
     switch (unit) {
       case "Celsius":
         f.accept(a.getCelsius());
@@ -80,11 +69,10 @@ class Display extends JFrame
 
 }
 
-class WeatherStation extends JFrame
-    implements Subject<WeatherStation, Display, Temperature> {
+class WeatherStation extends JFrame implements Subject {
   private String cityName;
   
-  private List<Display> obs = new ArrayList<>();
+  // D: Declare and initialize "obs" which is the "collection" of Observers
   
   private Temperature t = new Temperature();
 
@@ -109,18 +97,17 @@ class WeatherStation extends JFrame
     setVisible(true);
   }
 
-  String getCityName() {
+  public String toString() {
     return cityName;
   }
 
   @Override
-  public void addObserver(Display o) {
-    obs.add(o);
+  public void addObserver(Observer o) {
+    // E: Complete this method
   }
 
   @Override
   public void notifyObservers() {
-    obs.forEach(ob -> ob.update(this, t));
+    // F: Complete this method
   }
 }
-
