@@ -23,6 +23,12 @@ public class WeatherDisplay {
     display3.setLocation(400, 200);
 
     // C: "Attach" the three kinds of displays to each station
+    shippensburgStation.addObserver(display1);
+    shippensburgStation.addObserver(display2);
+    shippensburgStation.addObserver(display3);
+    harrisburgStation.addObserver(display1);
+    harrisburgStation.addObserver(display2);
+    harrisburgStation.addObserver(display3);
   }
 }
 
@@ -30,7 +36,6 @@ interface Subject {
   // A: Complete the Subject interface. Hint: It's straightforward.
   // Just look at the method(s) overridden by the implementer
   public void addObserver(Observer o);
-  public void removeObserver(Observer o);
   public void notifyObservers();
 }
 
@@ -107,11 +112,13 @@ class WeatherStation extends JFrame implements Subject {
 
   @Override
   public void addObserver(Observer o) {
-    obs.addObserver(o);
+    obs.add(o);
   }
 
   @Override
   public void notifyObservers() {
-    obs.removeObserver(o);
+    for (Observer ob : obs) {
+      ob.update(this, t);
+    }
   }
 }
